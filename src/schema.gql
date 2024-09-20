@@ -1,0 +1,167 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Example {
+  id: Int!
+  example_title: String!
+  example_desc: String!
+  is_active: Boolean!
+}
+
+type AllExamplesResponse {
+  statusCode: Int
+  message: String
+  data: [Example!]
+}
+
+type ExampleResponse {
+  statusCode: Int
+  message: String
+  data: Example
+}
+
+type CreateExampleResponse {
+  statusCode: Int
+  message: String
+  data: Example
+}
+
+type UpdateExampleResponse {
+  statusCode: Int
+  message: String
+  data: Example
+}
+
+type DeleteExampleResponse {
+  statusCode: Int
+  message: String
+}
+
+type ActivityLog {
+  id: Int!
+  user_id: Int!
+  activity_type: String!
+  action: String!
+  ip_address: String
+  description: String
+}
+
+type ActivityLogResponse {
+  statusCode: Int
+  message: String
+  data: ActivityLog
+}
+
+type FileResponse {
+  filename: String!
+  url: String!
+  file_type: String!
+  file_size: String!
+}
+
+type UploadResponse {
+  status_code: Int!
+  message: String!
+  data: FileResponse!
+}
+
+type MultiUploadsResponse {
+  status_code: Int!
+  message: String!
+  data: [FileResponse!]!
+}
+
+type BusinessResponse {
+  business_name: String!
+  business_address: String!
+  brief_description: String!
+  contact_name: String!
+  contact_email: String!
+  contact_phone: String!
+}
+
+type CategoryResponse {
+  name: String!
+}
+
+type SupportingDocumentResponse {
+  file_url: String!
+}
+
+type AwardResponse {
+  business: BusinessResponse!
+  category: CategoryResponse!
+  awardData: JSON!
+  supportingDocuments: [SupportingDocumentResponse!]!
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+type Query {
+  getAllExamplesQuery: AllExamplesResponse!
+  getExampleQuery(id: Int!): ExampleResponse!
+  awardsByCategory(name: AwardEnum!): [AwardResponse!]!
+}
+
+enum AwardEnum {
+  BestEcommercePlatform
+  EcommerceChampionOfTheYear
+  MostInnovativeDigitalTradeSolution
+}
+
+type Mutation {
+  createExampleMutation(input: CreateExampleDto!): CreateExampleResponse!
+  updateExampleMutation(id: Int!, input: UpdateExampleDto!): UpdateExampleResponse!
+  deleteExampleMutation(id: Int!): DeleteExampleResponse!
+  logActivityMutation(input: CreateActivityLogDto!): ActivityLogResponse!
+  signgleUploadFileMutation(file: Upload!): UploadResponse!
+  multipleUploadFilesMutation(files: [Upload!]!): MultiUploadsResponse!
+  createApplication(input: CreateApplicationFormInput!): Boolean!
+}
+
+input CreateExampleDto {
+  example_title: String!
+  example_desc: String!
+  is_active: Boolean!
+}
+
+input UpdateExampleDto {
+  example_title: String
+  example_desc: String
+  is_active: Boolean
+}
+
+input CreateActivityLogDto {
+  user_id: Int!
+  activity_type: String!
+  action: String!
+  ip_address: String
+  description: String
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+input CreateApplicationFormInput {
+  createBusinessInput: CreateBusinessInput!
+  createAwardInput: CreateAwardInput!
+  file_urls: [String!]!
+}
+
+input CreateBusinessInput {
+  business_name: String!
+  business_address: String!
+  brief_description: String!
+  contact_name: String!
+  contact_email: String!
+  contact_phone: String!
+}
+
+input CreateAwardInput {
+  award_type: AwardEnum!
+  award_data: JSON!
+}
